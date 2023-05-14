@@ -6,7 +6,6 @@ import tablesReducer from './tablesRedux';
 
 const subreducers = {
     tables: tablesReducer
-   // categories: categoriesReducer
 }
 
 const reducer = combineReducers(subreducers);
