@@ -1,12 +1,9 @@
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-//import { useSelector } from "react-redux";
-//import { getTableById } from "../../Redux/tablesRedux";
 
 const Table = () => {
 
     const { id } = useParams();
-    //const getTable = useSelector(state => getTableById(state, id));
 
     return (
         <>
@@ -30,7 +27,7 @@ const Table = () => {
                 <strong>People:</strong>
               </Form.Label>
               <Col sm={1}>
-                <Form.Control type='text'/>
+                <Form.Control type='text' placeholder={'peopleAmount'}/>
               </Col>
               /
               <Col sm={1}>

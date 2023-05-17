@@ -11,9 +11,7 @@ const Home = () => {
   return (
     <div>
       <h1>All tables</h1>
-      <div className="d-flex justify-content-between">
-        {tables.map(table => <SingleTable key={table.id} {...table} /> )}
-      </div>
+      {tables.map(table => <SingleTable key={table.id} {...table} /> )}
     </div>
   );
 };
