@@ -1,5 +1,4 @@
-// selectors
-export const getStatus = ({ status }) => status;
+import { API_URL } from "../config";
 
 //actions
 const createActionName = (actionName) => `app/status.${actionName}`;
@@ -12,7 +11,7 @@ export const updateStatus = (payload) => ({
 });
 export const fetchStatus = () => {
   return (dispatch) => {
-    fetch('http://localhost:3131/api/status')
+    fetch(API_URL + '/status')
       .then((res) => res.json())
       .then((status) => dispatch(updateStatus(status)));
   };

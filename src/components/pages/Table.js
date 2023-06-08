@@ -1,22 +1,28 @@
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import { getTableById, editTableRequest, getAllTables } from "../../Redux/tablesRedux";
-import { getStatus } from "../../Redux/statusRedux";
+import { getTableById, editTableRequest } from "../../Redux/tablesRedux";
 import { useState, useEffect } from "react";
 import { fetchTables } from "../../Redux/tablesRedux";
 
 const Table = () => {
 
     const { id } = useParams();
-    //const tables = useSelector(getAllTables);
     const tableData = useSelector((state) => getTableById(state, id));
-    //const statuses = useSelector(getStatus);
 
-    const [status, setStatus] = useState(tableData.status);
-    const [peopleAmount, setPeopleAmount] = useState(tableData.peopleAmount);
-    const [maxPeopleAmount, setMaxPeopleAmount] = useState(tableData.maxPeopleAmount);
-    const [bill, setBill] = useState(tableData.bill);
+    const [status, setStatus] = useState();
+    const [peopleAmount, setPeopleAmount] = useState();
+    const [maxPeopleAmount, setMaxPeopleAmount] = useState();
+    const [bill, setBill] = useState();
+
+    useEffect(() => {
+      if (tableData) {
+        setStatus(tableData.status);
+        setPeopleAmount(tableData.peopleAmount);
+        setMaxPeopleAmount(tableData.maxPeopleAmount);
+        setBill(tableData.bill);
+      }
+    }, [tableData]);
 
     const dispatch = useDispatch();
     useEffect(() => dispatch(fetchTables()), [dispatch]);
@@ -25,7 +31,7 @@ const Table = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      dispatch(editTableRequest({ status, peopleAmount, maxPeopleAmount, bill: status === 'Busy' ? bill : 0, id }));
+      dispatch(editTableRequest({ status, peopleAmount, maxPeopleAmount, bill, id }));
       navigate('/');
     };
 
@@ -66,7 +72,7 @@ const Table = () => {
                 <Row>
                   <Col sm={1}>$</Col>
                   <Col sm={6}>
-                    <Form.Control type='number' value={bill} onChange={(e) => setBill(e.target.value)}/>
+                    <Form.Control type='number' value={status === "Busy" ? bill : 0} onChange={(e) => setBill(e.target.value)}/>
                   </Col>
                 </Row>
               </Col>
