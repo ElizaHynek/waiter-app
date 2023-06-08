@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div>
       <h1>All tables</h1>
-      {tables.map(table => <SingleTable key={table.id} {...table} /> )}
+      {tables.map((table) => <SingleTable key={table.id} {...table} /> )}
     </div>
   );
 };
