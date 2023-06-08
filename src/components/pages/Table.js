@@ -1,7 +1,7 @@
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import { getTableById, getAllTables } from "../../Redux/tablesRedux";
+import { getTableById, editTableRequest, getAllTables } from "../../Redux/tablesRedux";
 import { getStatus } from "../../Redux/statusRedux";
 import { useState, useEffect } from "react";
 import { fetchTables } from "../../Redux/tablesRedux";
@@ -18,10 +18,21 @@ const Table = () => {
     const [maxPeopleAmount, setMaxPeopleAmount] = useState(tableData.maxPeopleAmount);
     const [bill, setBill] = useState(tableData.bill);
 
+    const dispatch = useDispatch();
+    useEffect(() => dispatch(fetchTables()), [dispatch]);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      dispatch(editTableRequest({ status, peopleAmount, maxPeopleAmount, bill: status === 'Busy' ? bill : 0, id }));
+      navigate('/');
+    };
+
     return (
         <>
           <h2>Table {id}</h2>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group as={Row} className='mb-3'>
               <Form.Label as='legend' column sm={1}>
               <strong>Status:</strong>
